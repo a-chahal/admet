@@ -1,0 +1,14 @@
+[workspace]
+authors = ["a-chahal <aaranchahal09@gmail.com>"]
+channels = ["conda-forge"]
+name = "admet_ai"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = ">=3.14.6,<3.15"
+
+[pypi-dependencies]
+admet-ai = ">=2.0.1, <3"
