@@ -2,7 +2,7 @@
 authors = ["a-chahal <aaranchahal09@gmail.com>"]
 channels = ["conda-forge"]
 name = "fto-admet-rewrite"
-platforms = ["osx-arm64"]
+platforms = ["osx-arm64", "linux-64"]
 version = "0.1.0"
 
 [tasks]
