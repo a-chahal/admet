@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 import sys
+from admet_pipeline.core import screen
 
 def _build_parser() -> argparse.ArgumentParser :
     parser = argparse.ArgumentParser(prog="python -m admet_pipeline.cli",
@@ -21,6 +22,10 @@ def main(arg_inp: list[str] | None = None):
     args = _build_parser().parse_args(arg_inp)
 
     print(args.w)
+
+    screen.main()
+
+    return
 
 if __name__=="__main__":
     sys.exit()

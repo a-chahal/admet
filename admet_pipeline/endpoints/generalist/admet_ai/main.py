@@ -1,6 +1,6 @@
 import sys
 
-from admet_ai import ADMETModel
+from admet_ai import ADMETModel # type: ignore
 
 def main():
     model = ADMETModel()
