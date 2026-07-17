@@ -1,7 +1,7 @@
 from enum import Enum
 import sys
 
-class Models(Enum):
+class Models():
     admet_ai = "admet_ai"
 
 endpoints = {

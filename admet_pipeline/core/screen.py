@@ -1,19 +1,14 @@
+from argparse import Namespace
+from pathlib import Path
 import sys
 import admet_pipeline.core.catalog as catalog
 import admet_pipeline.core.runner as runner
 
-def main():
-    
-    runnables = set()
+def main(final_file: Path):
 
-    endpoints = catalog.endpoints
-
-    for i in endpoints.keys():
-        runnables.update(endpoints[i])
-
-    runner.main(list(runnables))
+    runner.main(final_file)
 
     return
 
 if __name__=="__main__":
-    sys.exit(main())
+    sys.exit()
