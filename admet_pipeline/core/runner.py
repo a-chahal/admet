@@ -1,18 +1,19 @@
 import os
 import subprocess
 import sys
+from admet_pipeline.core import aggregate
 import admet_pipeline.core.catalog as catalog
 import json
 from pathlib import Path
 
 def main(file_path: Path):
 
+    outputs = {}
+
     with open(file_path, mode="r") as y:
         inp = json.load(y)
 
     models = inp["models"]
-
-    print(models)
 
     abs_input = str(Path(file_path).resolve())
 
@@ -29,9 +30,13 @@ def main(file_path: Path):
             capture_output=True,
             text=True,
         )
-        print(result.stdout, end="")
-        print(result.stderr, end="", file=sys.stderr)
-    
+
+        paths = [l.split("::", 1)[1] for l in result.stdout.splitlines() if l.startswith("result::")]
+        final_path = paths[-1]
+        
+        outputs[i] = final_path
+    aggregate.main(models, outputs)
+
     return
 
 if __name__ == "__main__":

@@ -47,10 +47,12 @@ def _build_model_list(w: str | None  = None, wo: str | None  = None):
         return runnables
 
     if wo:
-        return runnables - set(wo.split())
+        return runnables - set(wo.split(" "))
 
     if w:
-       return runnables.intersection(set(w.split()))
+       return runnables.intersection(set(w.split(" ")))
+    
+    
 
 def _build_final_file(input_path: Path, w: str | None  = None, wo: str | None  = None):
 
