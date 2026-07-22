@@ -1,0 +1,3 @@
+[submodule "admet_pipeline/endpoints/synthesizability/rascore/vendor/RAscore"]
+	path = admet_pipeline/endpoints/synthesizability/rascore/vendor/RAscore
+	url = https://github.com/reymond-group/RAscore.git

@@ -20,6 +20,7 @@ def main(file_path: Path):
     repo_root = Path(__file__).resolve().parents[2]
 
     for i in models:
+        print(i)
         endpoint = repo_root / catalog.paths[i]
         env = {**os.environ, "PYTHONPATH": str(repo_root)}
 
@@ -31,7 +32,11 @@ def main(file_path: Path):
             text=True,
         )
 
+        print(result.stdout)
+        print(result.stderr)
+
         paths = [l.split("::", 1)[1] for l in result.stdout.splitlines() if l.startswith("result::")]
+        print(paths)
         final_path = paths[-1]
         
         outputs[i] = final_path
