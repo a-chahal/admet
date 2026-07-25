@@ -81,7 +81,10 @@ def main(arg_inp: list[str] | None = None):
 
     predictions = run_qupkake(smiles)
 
-    formatted_predictions = predictions.to_dict(orient="index")
+    formatted_predictions = {s: [] for s in smiles}
+
+    for smi, g in predictions.groupby("smiles", sort=False):
+        formatted_predictions[smi] = g.drop(columns="smiles").to_dict(orient="records")
 
     target = out_path / name / output_path
 

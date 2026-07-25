@@ -5,6 +5,7 @@ import admet_pipeline.endpoints.structural_alerts.aggregate
 import admet_pipeline.endpoints.synthesizability.aggregate
 import admet_pipeline.endpoints.toxicity.aggregate
 import admet_pipeline.endpoints.lipophilicity.aggregate
+import admet_pipeline.endpoints.solubility.aggregate
 
 class Models():
     admet_ai = "admet_ai"
@@ -20,7 +21,7 @@ endpoints = {
     "clearance" : set(),
     "distribution" : set(),
     "ppb" : set(),
-    "solubility" : set(),
+    "solubility" : set({Models.admet_ai}),
     "lipophilicity" : set({Models.qupkake}),
     "permeability" : set(),
     "structural_alerts" : set({Models.pains_brenk}),
@@ -43,6 +44,7 @@ endpoints_packages = {
     "synthesizability": admet_pipeline.endpoints.synthesizability.aggregate,
     "toxicity": admet_pipeline.endpoints.toxicity.aggregate,
     "lipophilicity": admet_pipeline.endpoints.lipophilicity.aggregate,
+    "solubility": admet_pipeline.endpoints.solubility.aggregate
 }
 
 if __name__ == "__main__":
