@@ -6,7 +6,7 @@ import admet_pipeline.core.catalog as catalog
 import json
 from pathlib import Path
 
-def main(file_path: Path):
+def main(file_path: Path, out: Path):
 
     outputs = {}
 
@@ -25,7 +25,7 @@ def main(file_path: Path):
         env = {**os.environ, "PYTHONPATH": str(repo_root)}
 
         result = subprocess.run(
-            ["pixi", "run", "python", "main.py", "--input", abs_input],
+            ["pixi", "run", "python", "main.py", "--input", abs_input, "--out", out],
             cwd=endpoint,
             env=env,
             capture_output=True,
@@ -40,7 +40,7 @@ def main(file_path: Path):
         final_path = paths[-1]
         
         outputs[i] = final_path
-    aggregate.main(models, outputs)
+    aggregate.main(models, outputs, out)
 
     return
 

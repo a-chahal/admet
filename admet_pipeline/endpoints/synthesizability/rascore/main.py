@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from vendor.RAscore.RAscore import RAscore_XGB
 from admet_pipeline.endpoints import parser
 import json
@@ -5,6 +7,14 @@ from datetime import datetime
 from typing import List, Optional
 
 name = "rascore"
+
+import sys, os, admet_pipeline
+print("file    ", repr(__file__))
+print("spec    ", repr(__spec__.origin if __spec__ else None))
+print("path0   ", repr(sys.path[0]))
+print("cwd     ", os.getcwd())
+print("pkg     ", admet_pipeline.__path__)
+print("version ", sys.version)
 
 def main(arg_inp: Optional[List[str]] = None):
 
@@ -14,7 +24,7 @@ def main(arg_inp: Optional[List[str]] = None):
 
     args = p.parse_args(arg_inp)
 
-    print(args)
+    out_path = args.out
 
     data_path = args.input
 
@@ -23,21 +33,21 @@ def main(arg_inp: Optional[List[str]] = None):
 
     smiles = data["smiles"]
 
-    print(smiles)
-
     scorer = RAscore_XGB.RAScorerXGB()
 
     for i in smiles:
         raw[i] = float(scorer.predict(i))
 
-    print(raw)
-
     output_path = datetime.now().isoformat().replace(":","_") + ".json"
 
-    with open(output_path, mode="w") as y:
+    target = out_path / name / output_path
+    
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(target, mode="w") as y:
         json.dump(raw, y, indent = 2)
 
-    print(f"result::{output_path}")
+    print(f"result::{target}")
 
     return
 

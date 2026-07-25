@@ -1,3 +1,6 @@
 [submodule "admet_pipeline/endpoints/synthesizability/rascore/vendor/RAscore"]
 	path = admet_pipeline/endpoints/synthesizability/rascore/vendor/RAscore
 	url = https://github.com/reymond-group/RAscore.git
+[submodule "admet_pipeline/endpoints/lipophilicity/qupkake/vendor/qupkake"]
+	path = admet_pipeline/endpoints/lipophilicity/qupkake/vendor/qupkake
+	url = https://github.com/Shualdon/QupKake.git

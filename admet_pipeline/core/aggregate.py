@@ -5,7 +5,7 @@ from datetime import datetime
 import json
 
 
-def main(models, outputs):
+def main(models, outputs, out_path):
 
     model_set = set(models)
 
@@ -21,12 +21,18 @@ def main(models, outputs):
         for j in list(run):
             temp[j] = outputs[j]
 
-        if catalog.endpoints_packages.get(i):         
+        if catalog.endpoints_packages.get(i):       
             output = catalog.endpoints_packages[i].main(temp)
         
         final_card[i] = output
 
-    with open("card"+datetime.now().isoformat()+".json", mode="w") as y:
+    name =  datetime.now().isoformat().replace(":", "_") + ".json"
+
+    target = out_path / "card" / name
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(target, mode="w") as y:
         json.dump(final_card, y, indent=2)
 
     return

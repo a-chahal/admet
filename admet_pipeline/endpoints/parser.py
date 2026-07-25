@@ -9,7 +9,7 @@ def build_parser(name) -> argparse.ArgumentParser :
     
     parser.add_argument("--input", type=Path, help=".json of canonical SMILES + models to run", required=True)
 
-    parser.add_argument("--out", type=Path, help="where to store output")
+    parser.add_argument("--out", type=Path, help="where to store output", required = True)
 
     return parser
 

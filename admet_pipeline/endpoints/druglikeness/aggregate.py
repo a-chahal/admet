@@ -6,8 +6,7 @@ def main(inp_paths):
     raw = {}
 
     for i in inp_paths:
-        print(inp_paths[i])
-        with open(inp_paths[i], mode = "r") as y:
+        with open(Path(__file__).resolve().parent / i / inp_paths[i], mode="r") as y:
             raw[i] = json.load(y)
 
     return raw

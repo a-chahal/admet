@@ -19,7 +19,7 @@ def _build_parser() -> argparse.ArgumentParser :
     models.add_argument("-w", help="Models to run")
     models.add_argument("-wo", help="Models to run without")
 
-    parser.add_argument("--out", type=Path, help="where to store output")
+    parser.add_argument("--out", type=Path, help="where to store output", required = True)
 
     return parser
 
@@ -54,7 +54,7 @@ def _build_model_list(w: str | None  = None, wo: str | None  = None):
     
     
 
-def _build_final_file(input_path: Path, w: str | None  = None, wo: str | None  = None):
+def _build_final_file(input_path: Path, out: Path, w: str | None  = None, wo: str | None  = None):
 
     final_inp = _clean_input(input_path)
     runnables = _build_model_list(w, wo)
@@ -67,19 +67,24 @@ def _build_final_file(input_path: Path, w: str | None  = None, wo: str | None  =
         "models": list(runnables),
     }
 
-    file_name = "admet_pipeline/endpoints/final_file" + datetime.now().isoformat() + ".json"
+    file_name = datetime.now().isoformat().replace(":", "_") +  ".json"
+    file_path = out / "init" / file_name
 
-    with open(file_name, mode="w") as y:
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(file_path, mode="w") as y:
         json.dump(final_file, y, indent = 2)
 
-    return Path(file_name)
+    return Path(file_path)
 
 def main(arg_inp: list[str] | None = None):
     args = _build_parser().parse_args(arg_inp)
 
-    final_file = _build_final_file(args.input, args.w, args.wo)
+    out_path = args.out.resolve()
 
-    screen.main(final_file)
+    final_file = _build_final_file(args.input, out_path, args.w, args.wo)
+
+    screen.main(final_file, out_path)
 
     return
 

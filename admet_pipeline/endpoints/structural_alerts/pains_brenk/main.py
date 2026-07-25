@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from rdkit import Chem
 from admet_pipeline.endpoints import parser
 import json
@@ -23,6 +25,8 @@ def main(arg_inp: list[str] | None = None):
 
     data_path = args.input
 
+    out_path = args.out
+
     with open(data_path, "r") as y:
         data = json.load(y)
 
@@ -39,10 +43,13 @@ def main(arg_inp: list[str] | None = None):
 
     output_path = datetime.now().isoformat().replace(":","_") + ".json"
 
-    with open(output_path, mode="w") as y:
+    target = out_path / name / output_path
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(target, mode="w") as y:
         json.dump(output, y, indent = 2)
 
-    print(f"result::{output_path}")
+    print(f"result::{target}")
 
     return
 

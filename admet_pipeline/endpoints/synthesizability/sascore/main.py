@@ -1,3 +1,4 @@
+from pathlib import Path
 import sys
 import os
 import rdkit.Chem as Chem
@@ -6,6 +7,14 @@ import admet_pipeline.endpoints.parser as parser
 from datetime import datetime
 
 sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
+
+import sys, os, admet_pipeline
+print("file    ", repr(__file__))
+print("spec    ", repr(__spec__.origin if __spec__ else None))
+print("path0   ", repr(sys.path[0]))
+print("cwd     ", os.getcwd())
+print("pkg     ", admet_pipeline.__path__)
+print("version ", sys.version)
 
 import sascorer
 import json
@@ -21,7 +30,7 @@ def main(arg_inp: list[str] | None = None):
 
     args = p.parse_args(arg_inp)
 
-    print(args)
+    out_path = args.out
 
     data_path = args.input
 
@@ -35,10 +44,14 @@ def main(arg_inp: list[str] | None = None):
         
     output_path = datetime.now().isoformat().replace(":","_") + ".json"
 
-    with open(output_path, mode="w") as y:
+    target = out_path / name / output_path
+    
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(target, mode="w") as y:
         json.dump(raw, y, indent = 2)
 
-    print(f"result::{output_path}")
+    print(f"result::{target}")
 
     return
 

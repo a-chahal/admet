@@ -1,0 +1,23 @@
+[workspace]
+name = "qupkake-endpoint"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[dependencies]
+python = "3.11.*"
+pytorch = ">=2.0"
+pytorch-lightning = ">=2.0.2"
+torchmetrics = "*"
+torchvision = "*"
+pytorch_geometric = ">=2.3"
+rdkit = ">=2022.03.3"
+numpy = ">=1.25"
+pandas = ">=2.1"
+scipy = ">=1.11"
+xtb = ">=6.6"
+
+[pypi-dependencies]
+qupkake = { path = "./vendor/qupkake" }
+
+[activation.env]
+PATH = "$PIXI_PROJECT_ROOT/shims:$PATH"
