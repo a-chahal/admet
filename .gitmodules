@@ -4,3 +4,9 @@
 [submodule "admet_pipeline/endpoints/lipophilicity/qupkake/vendor/qupkake"]
 	path = admet_pipeline/endpoints/lipophilicity/qupkake/vendor/qupkake
 	url = https://github.com/Shualdon/QupKake.git
+[submodule "admet_pipeline/endpoints/lipophilicity/molgpka/vendor/MolGpKa"]
+	path = admet_pipeline/endpoints/lipophilicity/molgpka/vendor/MolGpKa
+	url = https://github.com/Xundrug/MolGpKa
+[submodule "admet_pipeline/endpoints/herg/bayesherg/vendor/bayesherg"]
+	path = admet_pipeline/endpoints/herg/bayesherg/vendor/bayesherg
+	url = https://github.com/GIST-CSBL/BayeshERG
