@@ -10,3 +10,6 @@
 [submodule "admet_pipeline/endpoints/herg/bayesherg/vendor/bayesherg"]
 	path = admet_pipeline/endpoints/herg/bayesherg/vendor/bayesherg
 	url = https://github.com/GIST-CSBL/BayeshERG
+[submodule "admet_pipeline/endpoints/herg/cardiotox/vendor/CardioTox"]
+	path = admet_pipeline/endpoints/herg/cardiotox/vendor/CardioTox
+	url = https://github.com/Abdulk084/CardioTox.git

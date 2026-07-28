@@ -1,0 +1,14 @@
+[workspace]
+authors = ["a-chahal <aaranchahal09@gmail.com>"]
+channels = ["conda-forge"]
+name = "pksmart"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "<3.12"
+
+[pypi-dependencies]
+pksmart = ">=3.0.1, <4"

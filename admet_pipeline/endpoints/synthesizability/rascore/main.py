@@ -8,14 +8,6 @@ from typing import List, Optional
 
 name = "rascore"
 
-import sys, os, admet_pipeline
-print("file    ", repr(__file__))
-print("spec    ", repr(__spec__.origin if __spec__ else None))
-print("path0   ", repr(sys.path[0]))
-print("cwd     ", os.getcwd())
-print("pkg     ", admet_pipeline.__path__)
-print("version ", sys.version)
-
 def main(arg_inp: Optional[List[str]] = None):
 
     raw = {}

@@ -1,0 +1,340 @@
+{
+  "set": "toxicophores_kazius",
+  "reference": "Kazius, McGuire & Bursi, J Med Chem 2005, 48, 312-320",
+  "description": "Mutagenicity (Ames) toxicophores. ANNOTATION TIER ONLY. These substructure classes dominate the Hansen/Ames benchmark that ADMET-AI's AMES head is trained on, so this set is expected to be largely redundant with that prediction. Use it to explain an AMES call, not as an independent signal in a composite score.",
+  "role": "annotation",
+  "alerts": [
+    {
+      "name": "aromatic_nitro",
+      "smarts": "c[$([N+](=O)[O-]),$(N(=O)=O)]",
+      "mechanism": "nitroreduction to nitrenium ion; DNA adduction",
+      "tier": 1,
+      "test_positive": [
+        "O=[N+]([O-])c1ccccc1",
+        "c1ccccc1N(=O)=O"
+      ],
+      "test_negative": [
+        "C[N+](=O)[O-]"
+      ]
+    },
+    {
+      "name": "aromatic_amine",
+      "smarts": "[NX3;H2,H1;!$(NC=[O,S]);!$(NS(=O)=O);!$(N[N,O]);!$(N=*)][c]",
+      "mechanism": "N-hydroxylation then esterification to nitrenium ion",
+      "tier": 1,
+      "test_positive": [
+        "Nc1ccccc1",
+        "Nc1ccc2ccccc2c1"
+      ],
+      "test_negative": [
+        "NCc1ccccc1",
+        "CC(=O)Nc1ccccc1"
+      ]
+    },
+    {
+      "name": "aromatic_hydroxylamine",
+      "smarts": "[c][NX3;H1,H0][OX2H1]",
+      "mechanism": "direct nitrenium precursor",
+      "tier": 1,
+      "test_positive": [
+        "ONc1ccccc1"
+      ],
+      "test_negative": [
+        "Nc1ccccc1",
+        "COc1ccccc1"
+      ]
+    },
+    {
+      "name": "aromatic_nitroso",
+      "smarts": "[c][NX2]=[OX1]",
+      "mechanism": "direct DNA-reactive electrophile",
+      "tier": 1,
+      "test_positive": [
+        "O=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "O=[N+]([O-])c1ccccc1"
+      ]
+    },
+    {
+      "name": "nitrosamine",
+      "smarts": "[NX3;!$(N=*)][NX2]=[OX1]",
+      "mechanism": "alpha-hydroxylation to alkyldiazonium; DNA alkylation",
+      "tier": 1,
+      "test_positive": [
+        "CN(C)N=O"
+      ],
+      "test_negative": [
+        "CN(C)N"
+      ]
+    },
+    {
+      "name": "aliphatic_n_nitro",
+      "smarts": "[NX3;!$(N=*)][$([N+](=O)[O-]),$(N(=O)=O)]",
+      "mechanism": "denitration and alkyldiazonium formation",
+      "tier": 1,
+      "test_positive": [
+        "CN(C)[N+](=O)[O-]"
+      ],
+      "test_negative": [
+        "CN(C)N=O",
+        "C[N+](=O)[O-]"
+      ]
+    },
+    {
+      "name": "alkyl_nitrite",
+      "smarts": "[CX4][OX2][NX2]=[OX1]",
+      "mechanism": "nitrosating agent",
+      "tier": 1,
+      "test_positive": [
+        "CCON=O"
+      ],
+      "test_negative": [
+        "CCO",
+        "O=Nc1ccccc1"
+      ]
+    },
+    {
+      "name": "epoxide",
+      "smarts": "[CX4;R1]1[OX2;R1][CX4;R1]1",
+      "mechanism": "direct DNA alkylation",
+      "tier": 1,
+      "test_positive": [
+        "C1CO1"
+      ],
+      "test_negative": [
+        "C1COC1",
+        "CC1(COC1)N1CCCC1"
+      ]
+    },
+    {
+      "name": "aziridine",
+      "smarts": "[CX4;R1]1[NX3;R1][CX4;R1]1",
+      "mechanism": "direct DNA alkylation",
+      "tier": 1,
+      "test_positive": [
+        "C1CN1"
+      ],
+      "test_negative": [
+        "C1CNC1"
+      ]
+    },
+    {
+      "name": "azide",
+      "smarts": "[NX2,NX1]=[NX2+]=[NX1-]",
+      "mechanism": "nitrene formation",
+      "tier": 1,
+      "test_positive": [
+        "CN=[N+]=[N-]"
+      ],
+      "test_negative": [
+        "CN=NC"
+      ]
+    },
+    {
+      "name": "diazo",
+      "smarts": "[#6]=[NX2+]=[NX1-]",
+      "mechanism": "carbene and diazonium chemistry",
+      "tier": 1,
+      "test_positive": [
+        "[CH2]=[N+]=[N-]"
+      ],
+      "test_negative": [
+        "CN=[N+]=[N-]"
+      ]
+    },
+    {
+      "name": "aromatic_azo",
+      "smarts": "[c][NX2]=[NX2][c]",
+      "mechanism": "azoreduction to mutagenic arylamines",
+      "tier": 1,
+      "test_positive": [
+        "c1ccccc1N=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "CN=NC"
+      ]
+    },
+    {
+      "name": "triazene",
+      "smarts": "[NX3;!$(N=*)][NX2]=[NX2]",
+      "mechanism": "decomposition to alkyldiazonium",
+      "tier": 1,
+      "test_positive": [
+        "CN(C)N=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "CN(C)N",
+        "c1ccccc1N=Nc1ccccc1"
+      ]
+    },
+    {
+      "name": "aliphatic_halide",
+      "smarts": "[CX4;!$([CX4]([Cl,Br,I])[Cl,Br,I])][Cl,Br,I]",
+      "mechanism": "SN2 alkylation of DNA bases",
+      "tier": 2,
+      "test_positive": [
+        "CCCl",
+        "ClCc1ccccc1"
+      ],
+      "test_negative": [
+        "Clc1ccccc1",
+        "ClC(Cl)Cl"
+      ]
+    },
+    {
+      "name": "polyhalogenated_alkane",
+      "smarts": "[CX4]([Cl,Br,I])([Cl,Br,I])",
+      "mechanism": "radical and carbene formation",
+      "tier": 2,
+      "test_positive": [
+        "ClC(Cl)Cl",
+        "ClCC(Cl)Cl"
+      ],
+      "test_negative": [
+        "CCCl",
+        "FC(F)(F)c1ccccc1"
+      ]
+    },
+    {
+      "name": "monohaloalkene",
+      "smarts": "[CX3]=[CX3][Cl,Br,I]",
+      "mechanism": "epoxidation to reactive haloepoxide",
+      "tier": 2,
+      "test_positive": [
+        "ClC=C"
+      ],
+      "test_negative": [
+        "Clc1ccccc1",
+        "CCCl"
+      ]
+    },
+    {
+      "name": "sulfur_mustard",
+      "smarts": "[SX2]([CX4][CX4][Cl,Br,I])[CX4][CX4][Cl,Br,I]",
+      "mechanism": "episulfonium formation; bifunctional DNA alkylation",
+      "tier": 1,
+      "test_positive": [
+        "ClCCSCCCl"
+      ],
+      "test_negative": [
+        "ClCCSC",
+        "ClCCN(CCCl)C"
+      ]
+    },
+    {
+      "name": "nitrogen_mustard",
+      "smarts": "[NX3]([CX4][CX4][Cl,Br,I])[CX4][CX4][Cl,Br,I]",
+      "mechanism": "aziridinium formation; bifunctional DNA alkylation",
+      "tier": 1,
+      "test_positive": [
+        "ClCCN(CCCl)c1ccccc1"
+      ],
+      "test_negative": [
+        "ClCCSCCCl"
+      ]
+    },
+    {
+      "name": "n_methylol",
+      "smarts": "[NX3;!$(N=*)][CX4H2][OX2H1]",
+      "mechanism": "formaldehyde release; DNA crosslinking",
+      "tier": 1,
+      "test_positive": [
+        "OCN(C)C"
+      ],
+      "test_negative": [
+        "OCCN(C)C",
+        "CN(C)C"
+      ]
+    },
+    {
+      "name": "sulfonate_ester",
+      "smarts": "[CX4][OX2][SX4](=[OX1])(=[OX1])",
+      "mechanism": "direct DNA alkylation",
+      "tier": 1,
+      "test_positive": [
+        "COS(C)(=O)=O",
+        "COS(=O)(=O)c1ccccc1"
+      ],
+      "test_negative": [
+        "CS(=O)(=O)C"
+      ]
+    },
+    {
+      "name": "sulfate_ester",
+      "smarts": "[CX4][OX2][SX4](=[OX1])(=[OX1])[OX2]",
+      "mechanism": "direct DNA alkylation",
+      "tier": 1,
+      "test_positive": [
+        "COS(=O)(=O)OC"
+      ],
+      "test_negative": [
+        "COS(C)(=O)=O"
+      ]
+    },
+    {
+      "name": "beta_propiolactone",
+      "smarts": "[OX1]=[CX3;R1]1[CX4;R1][CX4;R1][OX2;R1]1",
+      "mechanism": "strained-ring alkylating agent",
+      "tier": 1,
+      "test_positive": [
+        "O=C1CCO1"
+      ],
+      "test_negative": [
+        "O=C1CCCO1"
+      ]
+    },
+    {
+      "name": "polycyclic_aromatic_3ring_linear",
+      "smarts": "[cR1]1[cR1][cR1][cR2]2[cR1][cR2]3[cR1][cR1][cR1][cR1][cR2]3[cR1][cR2]2[cR1]1",
+      "mechanism": "diol-epoxide formation at bay/fjord regions",
+      "tier": 2,
+      "test_positive": [
+        "c1ccc2cc3ccccc3cc2c1"
+      ],
+      "test_negative": [
+        "c1ccc2ccccc2c1",
+        "c1ccc2[nH]ccc2c1"
+      ]
+    },
+    {
+      "name": "polycyclic_aromatic_3ring_angular",
+      "smarts": "[cR1]1[cR1][cR1][cR2]2[cR2]3[cR1][cR1][cR1][cR1][cR2]3[cR1][cR1][cR2]2[cR1]1",
+      "mechanism": "bay-region diol-epoxide formation",
+      "tier": 2,
+      "test_positive": [
+        "c1ccc2c(c1)ccc1ccccc12"
+      ],
+      "test_negative": [
+        "c1ccc2ccccc2c1"
+      ]
+    },
+    {
+      "name": "isocyanate_isothiocyanate",
+      "smarts": "[NX2]=[CX2]=[O,S]",
+      "mechanism": "direct carbamoylation of nucleophiles",
+      "tier": 2,
+      "test_positive": [
+        "O=C=Nc1ccccc1",
+        "S=C=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "N#Cc1ccccc1"
+      ]
+    },
+    {
+      "name": "hydrazine",
+      "smarts": "[NX3;!$(N=*);!$(NC=[O,S]);!$(N[OX2H])][NX3;!$(N=*);!$(NC=[O,S])]",
+      "mechanism": "radical generation and DNA methylation",
+      "tier": 1,
+      "test_positive": [
+        "NNc1ccccc1",
+        "NN"
+      ],
+      "test_negative": [
+        "NCCN",
+        "CC(=O)NN"
+      ]
+    }
+  ]
+}

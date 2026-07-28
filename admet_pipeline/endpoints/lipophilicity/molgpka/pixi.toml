@@ -1,0 +1,14 @@
+[workspace]
+name = "molgpka-endpoint"
+version = "0.1.0"
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64"]
+
+[dependencies]
+python = ">=3.10,<3.13"
+pytorch-cpu = "*"      
+pytorch_geometric = "*"
+rdkit = "*"
+pandas = "*"
+numpy = "*"
+scikit-learn = "*"

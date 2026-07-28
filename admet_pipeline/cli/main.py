@@ -50,7 +50,7 @@ def _build_model_list(w: str | None  = None, wo: str | None  = None):
         return runnables - set(wo.split(" "))
 
     if w:
-       return runnables.intersection(set(w.split(" ")))
+       return runnables.intersection(set(w.split(",")))
     
     
 

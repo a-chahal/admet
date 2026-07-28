@@ -1,0 +1,19 @@
+[workspace]
+authors = ["a-chahal <aaranchahal09@gmail.com>"]
+channels = ["conda-forge"]
+name = "bayesherg"
+platforms = ["osx-64", "linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.8.*"
+pytorch = "1.6.0"
+rdkit = "2021.03.5"
+tqdm = "4.38.0"
+pandas = "*"
+numpy = "*"
+
+[pypi-dependencies]
+dgl = "==0.4.3.post2"

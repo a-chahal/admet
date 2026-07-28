@@ -1,0 +1,13 @@
+[workspace]
+authors = ["a-chahal <aaranchahal09@gmail.com>"]
+channels = ["conda-forge"]
+name = "smarcyp"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.11.*"
+rdkit = "*"         
+openjdk = ">=11"

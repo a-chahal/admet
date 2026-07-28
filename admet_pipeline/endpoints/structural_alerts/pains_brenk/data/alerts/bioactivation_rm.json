@@ -1,0 +1,793 @@
+{
+  "set": "bioactivation_rm",
+  "reference": "Kalgutkar & Dalvie, Annu Rev Pharmacol Toxicol 2015; Kalgutkar et al., Curr Drug Metab 2005; Stepan et al., Chem Res Toxicol 2011; Claesson & Minidis, Chem Res Toxicol 2018",
+  "description": "Substructures associated with cytochrome-P450-mediated formation of electrophilic reactive metabolites and/or mechanism-based CYP inactivation. Gate only: binary, context-blind, no potency or dose. Tier 1 = strong literature precedent for RM formation; tier 2 = well-precedented but context-dependent; tier 3 = weak or heavily context-dependent, expect high false-positive rate.",
+  "alerts": [
+    {
+      "name": "furan_monocyclic",
+      "smarts": "[cR1]1[cR1][cR1][cR1][oR1]1",
+      "mechanism": "CYP epoxidation -> cis-2-butene-1,4-dial; protein and GSH adduction",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "c1ccc(-c2ccco2)cc1",
+        "Cc1ccc(C)o1",
+        "c1ccoc1"
+      ],
+      "test_negative": [
+        "c1ccc2occc2c1",
+        "C1CCOC1",
+        "c1ccc2c(c1)OCCO2"
+      ]
+    },
+    {
+      "name": "benzofuran",
+      "smarts": "[cR2]1[cR1][cR1][oR1][cR2]1",
+      "mechanism": "epoxidation at 2,3-positions; lower risk than monocyclic furan",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "c1ccc2occc2c1",
+        "Cc1cc2ccccc2o1"
+      ],
+      "test_negative": [
+        "c1ccc(-c2ccco2)cc1",
+        "c1ccc2c(c1)OCCO2"
+      ]
+    },
+    {
+      "name": "thiophene_monocyclic",
+      "smarts": "[cR1]1[cR1][cR1][cR1][sR1]1",
+      "mechanism": "CYP S-oxidation to thiophene-S-oxide, or 2,3-epoxide; Michael acceptor / Diels-Alder electrophile",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "c1ccc(-c2cccs2)cc1",
+        "c1ccsc1"
+      ],
+      "test_negative": [
+        "c1ccc2sccc2c1",
+        "C1CCSC1"
+      ]
+    },
+    {
+      "name": "benzothiophene",
+      "smarts": "[cR2]1[cR1][cR1][sR1][cR2]1",
+      "mechanism": "S-oxidation; lower risk than monocyclic thiophene",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "c1ccc2sccc2c1"
+      ],
+      "test_negative": [
+        "c1ccc(-c2cccs2)cc1"
+      ]
+    },
+    {
+      "name": "pyrrole_monocyclic",
+      "smarts": "[nR1]1[cR1][cR1][cR1][cR1]1",
+      "mechanism": "oxidation to reactive 2H-pyrrole / enedial-type species",
+      "tier": 2,
+      "mbi": true,
+      "test_positive": [
+        "c1cc[nH]c1",
+        "Cn1cccc1"
+      ],
+      "test_negative": [
+        "c1ccc2[nH]ccc2c1",
+        "C1CCNC1"
+      ]
+    },
+    {
+      "name": "indole_3_alkyl",
+      "smarts": "c1ccc2c(c1)c([CX4])c[nH]2",
+      "mechanism": "dehydrogenation to 3-methylene-indolenine (electrophilic); accelerated when the C3 substituent bears a leaving group such as an amine",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "Cc1c[nH]c2ccccc12",
+        "c1ccc2[nH]cc(CN)c2c1"
+      ],
+      "test_negative": [
+        "c1ccc2[nH]ccc2c1",
+        "c1ccc2[nH]cc(-c3ccccc3)c2c1"
+      ]
+    },
+    {
+      "name": "aminothiazole_2",
+      "smarts": "[NX3;H2,H1;!$(NC=O)]c1nccs1",
+      "mechanism": "S-oxidation / epoxidation to reactive thiazole metabolites",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "Nc1nccs1",
+        "CNc1nccs1"
+      ],
+      "test_negative": [
+        "Cc1nccs1",
+        "CC(=O)Nc1nccs1"
+      ]
+    },
+    {
+      "name": "thiazole",
+      "smarts": "[cR1]1[nR1][cR1][sR1][cR1]1",
+      "mechanism": "S-oxidation and epoxidation",
+      "tier": 3,
+      "mbi": false,
+      "test_positive": [
+        "Cc1nccs1",
+        "c1cscn1"
+      ],
+      "test_negative": [
+        "c1ccsc1",
+        "c1cc[nH]c1"
+      ]
+    },
+    {
+      "name": "aniline_primary_secondary",
+      "smarts": "[NX3;H2,H1;!$(NC=[O,S]);!$(NS(=O)=O);!$(N[N,O]);!$(N=*)][c]",
+      "mechanism": "N-oxidation to hydroxylamine/nitroso, or ring oxidation to quinone imine",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "Nc1ccccc1",
+        "CNc1ccccc1",
+        "Nc1ccc(Cl)cc1"
+      ],
+      "test_negative": [
+        "CC(=O)Nc1ccccc1",
+        "CN(C)c1ccccc1",
+        "NCc1ccccc1",
+        "c1ccc2[nH]ccc2c1"
+      ]
+    },
+    {
+      "name": "anilide",
+      "smarts": "[cX3][NX3;H1][CX3]=[O,S]",
+      "mechanism": "amide hydrolysis liberates arylamine; or direct para-oxidation to quinone imine",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "CC(=O)Nc1ccc(O)cc1",
+        "CC(=O)Nc1ccccc1"
+      ],
+      "test_negative": [
+        "CC(=O)NCc1ccccc1",
+        "CC(=O)N(C)c1ccccc1"
+      ]
+    },
+    {
+      "name": "para_alkyl_phenol",
+      "smarts": "[OX2H]c1ccc([CX4,CX3])cc1",
+      "mechanism": "oxidation to quinone methide",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "Cc1ccc(O)cc1",
+        "OCc1ccc(O)cc1"
+      ],
+      "test_negative": [
+        "Oc1ccccc1",
+        "Cc1cccc(O)c1"
+      ]
+    },
+    {
+      "name": "catechol",
+      "smarts": "[OX2H]c1ccccc1[OX2H]",
+      "mechanism": "two-electron oxidation to ortho-quinone; redox cycling",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "Oc1ccccc1O",
+        "NCCc1ccc(O)c(O)c1"
+      ],
+      "test_negative": [
+        "Oc1cccc(O)c1",
+        "COc1ccccc1O"
+      ]
+    },
+    {
+      "name": "hydroquinone",
+      "smarts": "[OX2H]c1ccc([OX2H])cc1",
+      "mechanism": "oxidation to para-quinone; redox cycling",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "Oc1ccc(O)cc1"
+      ],
+      "test_negative": [
+        "Oc1cccc(O)c1",
+        "Oc1ccccc1O"
+      ]
+    },
+    {
+      "name": "quinone_para",
+      "smarts": "O=C1[#6]=[#6]C(=O)[#6]=[#6]1",
+      "mechanism": "direct Michael acceptor and redox cycler",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=C1C=CC(=O)C=C1"
+      ],
+      "test_negative": [
+        "Oc1ccc(O)cc1",
+        "O=C1CCC(=O)CC1"
+      ]
+    },
+    {
+      "name": "quinone_ortho",
+      "smarts": "O=C1[#6]=[#6][#6]=[#6]C1=O",
+      "mechanism": "direct Michael acceptor and redox cycler",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=C1C=CC=CC1=O"
+      ],
+      "test_negative": [
+        "Oc1ccccc1O",
+        "O=C1CCCCC1=O"
+      ]
+    },
+    {
+      "name": "methylenedioxyphenyl",
+      "smarts": "[CX4;R1]1[OX2;R1][cR2][cR2][OX2;R1]1",
+      "mechanism": "carbene formation; metabolic-intermediate complex with CYP heme",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "C=CCc1ccc2c(c1)OCO2",
+        "c1ccc2c(c1)OCO2"
+      ],
+      "test_negative": [
+        "c1ccc2c(c1)OCCO2",
+        "COc1ccccc1OC"
+      ]
+    },
+    {
+      "name": "nitroaromatic",
+      "smarts": "c[$([N+](=O)[O-]),$(N(=O)=O)]",
+      "mechanism": "nitroreduction to nitroso and hydroxylamine; DNA and protein adduction",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=[N+]([O-])c1ccccc1",
+        "c1ccccc1N(=O)=O"
+      ],
+      "test_negative": [
+        "C[N+](=O)[O-]",
+        "Nc1ccccc1"
+      ]
+    },
+    {
+      "name": "nitroalkane",
+      "smarts": "[CX4][$([N+](=O)[O-]),$(N(=O)=O)]",
+      "mechanism": "nitroreduction; alpha-carbon activation",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "C[N+](=O)[O-]",
+        "CN(=O)=O"
+      ],
+      "test_negative": [
+        "O=[N+]([O-])c1ccccc1"
+      ]
+    },
+    {
+      "name": "nitrofuran",
+      "smarts": "[$([N+](=O)[O-]),$(N(=O)=O)]c1ccco1",
+      "mechanism": "nitroreduction plus furan ring opening; strongly precedented genotoxicant",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=[N+]([O-])c1ccco1"
+      ],
+      "test_negative": [
+        "O=[N+]([O-])c1cccs1",
+        "c1ccoc1"
+      ]
+    },
+    {
+      "name": "nitrothiophene",
+      "smarts": "[$([N+](=O)[O-]),$(N(=O)=O)]c1cccs1",
+      "mechanism": "nitroreduction plus thiophene S-oxidation",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=[N+]([O-])c1cccs1"
+      ],
+      "test_negative": [
+        "O=[N+]([O-])c1ccco1"
+      ]
+    },
+    {
+      "name": "aromatic_nitroso",
+      "smarts": "[c][NX2]=[OX1]",
+      "mechanism": "direct electrophile; covalent protein binding",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "O=[N+]([O-])c1ccccc1",
+        "Nc1ccccc1"
+      ]
+    },
+    {
+      "name": "nitrosamine",
+      "smarts": "[NX3;!$(N=*)][NX2]=[OX1]",
+      "mechanism": "alpha-hydroxylation to diazonium; DNA alkylation",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "CN(C)N=O",
+        "O=NN1CCCCC1"
+      ],
+      "test_negative": [
+        "CN(C)N",
+        "O=Nc1ccccc1"
+      ]
+    },
+    {
+      "name": "hydrazine",
+      "smarts": "[NX3;!$(N=*);!$(NC=[O,S]);!$(N[OX2H])][NX3;!$(N=*);!$(NC=[O,S])]",
+      "mechanism": "oxidation to diazene and carbon-centred radicals",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "NNc1ccccc1",
+        "CNN",
+        "NN"
+      ],
+      "test_negative": [
+        "NC(=O)NN",
+        "CN(C)N=O",
+        "NCCN"
+      ]
+    },
+    {
+      "name": "hydrazide",
+      "smarts": "[CX3](=[OX1])[NX3][NX3;!$(N=*)]",
+      "mechanism": "hydrolysis to hydrazine, then oxidative activation to acyl radicals",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "NNC(=O)c1ccncc1",
+        "CC(=O)NN"
+      ],
+      "test_negative": [
+        "CC(=O)NC",
+        "NNc1ccccc1"
+      ]
+    },
+    {
+      "name": "hydroxylamine",
+      "smarts": "[NX3;!$(N=*);!$(N[N])][OX2H1]",
+      "mechanism": "direct precursor to nitroso electrophiles",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "ONc1ccccc1",
+        "CN(C)O"
+      ],
+      "test_negative": [
+        "Nc1ccccc1",
+        "CON",
+        "O=NN(C)C"
+      ]
+    },
+    {
+      "name": "azo_aromatic",
+      "smarts": "[c][NX2]=[NX2][c]",
+      "mechanism": "azoreduction to two arylamines",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "c1ccccc1N=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "CN=NC",
+        "CN=[N+]=[N-]"
+      ]
+    },
+    {
+      "name": "azide",
+      "smarts": "[NX2,NX1]=[NX2+]=[NX1-]",
+      "mechanism": "nitrene formation; direct alkylation",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "CN=[N+]=[N-]",
+        "[N-]=[N+]=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "c1ccccc1N=Nc1ccccc1",
+        "CN(C)N"
+      ]
+    },
+    {
+      "name": "epoxide",
+      "smarts": "[CX4;R1]1[OX2;R1][CX4;R1]1",
+      "mechanism": "direct alkylating electrophile",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "C1CO1",
+        "CC1CO1",
+        "c1ccccc1C1CO1"
+      ],
+      "test_negative": [
+        "C1COC1",
+        "C1CCOC1",
+        "CC1(COC1)N1CCCC1"
+      ]
+    },
+    {
+      "name": "aziridine",
+      "smarts": "[CX4;R1]1[NX3;R1][CX4;R1]1",
+      "mechanism": "direct alkylating electrophile",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "C1CN1",
+        "CN1CC1"
+      ],
+      "test_negative": [
+        "C1CNC1",
+        "C1CCNC1"
+      ]
+    },
+    {
+      "name": "thiirane",
+      "smarts": "[CX4;R1]1[SX2;R1][CX4;R1]1",
+      "mechanism": "direct alkylating electrophile",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "C1CS1"
+      ],
+      "test_negative": [
+        "C1CSC1",
+        "C1CO1"
+      ]
+    },
+    {
+      "name": "beta_propiolactone",
+      "smarts": "[OX1]=[CX3;R1]1[CX4;R1][CX4;R1][OX2;R1]1",
+      "mechanism": "strained-ring acylating agent",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=C1CCO1"
+      ],
+      "test_negative": [
+        "O=C1CCCO1",
+        "C1COC1"
+      ]
+    },
+    {
+      "name": "beta_lactam",
+      "smarts": "[OX1]=[CX3;R1]1[#6;R1][#6;R1][NX3;R1]1",
+      "mechanism": "strained-ring acylating agent; haptenation",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "O=C1CCN1",
+        "O=C1CCN1C"
+      ],
+      "test_negative": [
+        "O=C1CCCN1",
+        "O=C1CCO1"
+      ]
+    },
+    {
+      "name": "michael_acceptor",
+      "smarts": "[CX3;!R]=[CX3;!R][CX3](=[OX1])[#6,#7,#8]",
+      "mechanism": "direct conjugate addition by GSH and protein thiols",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "C=CC(=O)N",
+        "C=CC(=O)OC",
+        "CC=CC(=O)C"
+      ],
+      "test_negative": [
+        "CC(=O)C",
+        "O=C1CCCCC1",
+        "c1ccccc1C(=O)C"
+      ]
+    },
+    {
+      "name": "vinyl_sulfone",
+      "smarts": "[CX3]=[CX3][SX4](=[OX1])(=[OX1])",
+      "mechanism": "direct conjugate addition",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "C=CS(=O)(=O)c1ccccc1"
+      ],
+      "test_negative": [
+        "CCS(=O)(=O)c1ccccc1"
+      ]
+    },
+    {
+      "name": "alpha_beta_unsaturated_nitrile",
+      "smarts": "[CX3]=[CX3][CX2]#[NX1]",
+      "mechanism": "direct conjugate addition",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "C=CC#N",
+        "N#CC=Cc1ccccc1"
+      ],
+      "test_negative": [
+        "CCC#N"
+      ]
+    },
+    {
+      "name": "terminal_alkyne",
+      "smarts": "[CX2;H1]#[CX2]",
+      "mechanism": "oxidation to ketene or oxirene; heme alkylation",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "C#Cc1ccccc1",
+        "C#CCO"
+      ],
+      "test_negative": [
+        "CC#Cc1ccccc1",
+        "CC#N"
+      ]
+    },
+    {
+      "name": "terminal_alkene_monosubstituted",
+      "smarts": "[CX3H2]=[CX3H1][#6]",
+      "mechanism": "epoxidation to reactive terminal epoxide",
+      "tier": 2,
+      "mbi": true,
+      "test_positive": [
+        "C=CCc1ccccc1",
+        "C=CCCO"
+      ],
+      "test_negative": [
+        "CC=CC",
+        "C=C(C)C"
+      ]
+    },
+    {
+      "name": "cyclopropylamine",
+      "smarts": "[NX3;!$(N=*)][CX4;R1]1[CX4;R1][CX4;R1]1",
+      "mechanism": "single-electron oxidation to aminium radical; ring opening onto heme",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "NC1CC1",
+        "CN(C)C1CC1"
+      ],
+      "test_negative": [
+        "NCC1CC1",
+        "NC1CCC1"
+      ]
+    },
+    {
+      "name": "thiourea",
+      "smarts": "[NX3][CX3](=[SX1])[NX3]",
+      "mechanism": "S-oxidation to sulfenic/sulfinic acid; thiol depletion",
+      "tier": 1,
+      "mbi": true,
+      "test_positive": [
+        "NC(=S)N",
+        "CNC(=S)Nc1ccccc1"
+      ],
+      "test_negative": [
+        "NC(=O)N",
+        "CNC(=S)C"
+      ]
+    },
+    {
+      "name": "thioamide",
+      "smarts": "[NX3][CX3](=[SX1])[#6]",
+      "mechanism": "S-oxidation to reactive sulfine",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "CNC(=S)C",
+        "NC(=S)c1ccncc1"
+      ],
+      "test_negative": [
+        "CNC(=O)C",
+        "NC(=S)N"
+      ]
+    },
+    {
+      "name": "isothiocyanate",
+      "smarts": "[NX2]=[CX2]=[SX1]",
+      "mechanism": "direct thiol acylation",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "S=C=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "O=C=Nc1ccccc1",
+        "N#Cc1ccccc1"
+      ]
+    },
+    {
+      "name": "isocyanate",
+      "smarts": "[NX2]=[CX2]=[OX1]",
+      "mechanism": "direct acylating electrophile",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=C=Nc1ccccc1"
+      ],
+      "test_negative": [
+        "S=C=Nc1ccccc1"
+      ]
+    },
+    {
+      "name": "thiol",
+      "smarts": "[SX2H1]",
+      "mechanism": "oxidation to disulfide/sulfenic acid; redox cycling",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "CCS",
+        "Sc1ccccc1"
+      ],
+      "test_negative": [
+        "CSC",
+        "c1ccsc1"
+      ]
+    },
+    {
+      "name": "disulfide",
+      "smarts": "[SX2][SX2]",
+      "mechanism": "thiol-disulfide exchange with protein cysteines",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "CSSC"
+      ],
+      "test_negative": [
+        "CSC",
+        "CCS"
+      ]
+    },
+    {
+      "name": "alkyl_halide",
+      "smarts": "[CX4;!$(C(F)(F)F)][Cl,Br,I]",
+      "mechanism": "direct SN2 alkylation of nucleophiles",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "CCCl",
+        "ClCc1ccccc1"
+      ],
+      "test_negative": [
+        "Clc1ccccc1",
+        "FC(F)(F)c1ccccc1",
+        "FC1CCNC1"
+      ]
+    },
+    {
+      "name": "alpha_halo_carbonyl",
+      "smarts": "[OX1]=[CX3][CX4][Cl,Br,I]",
+      "mechanism": "highly activated alkylating agent",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=C(CCl)c1ccccc1"
+      ],
+      "test_negative": [
+        "CCCl",
+        "O=C(C)c1ccccc1"
+      ]
+    },
+    {
+      "name": "nitrogen_mustard",
+      "smarts": "[NX3]([CX4][CX4][Cl,Br,I])[CX4][CX4][Cl,Br,I]",
+      "mechanism": "aziridinium formation; bifunctional DNA alkylation",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "ClCCN(CCCl)c1ccccc1"
+      ],
+      "test_negative": [
+        "ClCCNCC",
+        "CCCl"
+      ]
+    },
+    {
+      "name": "acyl_halide",
+      "smarts": "[CX3](=[OX1])[F,Cl,Br,I]",
+      "mechanism": "direct acylating electrophile",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "O=C(Cl)c1ccccc1"
+      ],
+      "test_negative": [
+        "O=C(O)c1ccccc1",
+        "ClCc1ccccc1"
+      ]
+    },
+    {
+      "name": "anhydride",
+      "smarts": "[CX3](=[OX1])[OX2][CX3]=[OX1]",
+      "mechanism": "direct acylating electrophile; haptenation",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "CC(=O)OC(C)=O"
+      ],
+      "test_negative": [
+        "CC(=O)OC",
+        "CC(=O)O"
+      ]
+    },
+    {
+      "name": "aldehyde",
+      "smarts": "[CX3H1](=[OX1])[#6]",
+      "mechanism": "Schiff-base formation with lysine; oxidation to acyl species",
+      "tier": 2,
+      "mbi": false,
+      "test_positive": [
+        "O=Cc1ccccc1",
+        "CCC=O"
+      ],
+      "test_negative": [
+        "O=CO",
+        "CC(=O)C",
+        "O=CN(C)C"
+      ]
+    },
+    {
+      "name": "sulfonate_ester",
+      "smarts": "[CX4][OX2][SX4](=[OX1])(=[OX1])[#6]",
+      "mechanism": "direct alkylating agent",
+      "tier": 1,
+      "mbi": false,
+      "test_positive": [
+        "COS(=O)(=O)c1ccccc1",
+        "COS(C)(=O)=O"
+      ],
+      "test_negative": [
+        "CS(=O)(=O)c1ccccc1",
+        "COS(=O)(=O)O"
+      ]
+    },
+    {
+      "name": "carboxylic_acid_acyl_glucuronide",
+      "smarts": "[CX3](=[OX1])[OX2H1]",
+      "mechanism": "acyl glucuronide formation; transacylation and glycation of protein",
+      "tier": 3,
+      "mbi": false,
+      "test_positive": [
+        "O=C(O)c1ccccc1",
+        "CC(C)C(=O)O"
+      ],
+      "test_negative": [
+        "O=C(OC)c1ccccc1",
+        "O=C(N)c1ccccc1"
+      ]
+    },
+    {
+      "name": "imine_schiff_base",
+      "smarts": "[CX3;!R]=[NX2;!R][#6]",
+      "mechanism": "electrophilic at carbon; hydrolytically labile",
+      "tier": 3,
+      "mbi": false,
+      "test_positive": [
+        "CC=NC",
+        "c1ccccc1C=NC"
+      ],
+      "test_negative": [
+        "c1ccncc1",
+        "CC(=O)NC",
+        "CN=[N+]=[N-]"
+      ]
+    }
+  ]
+}
